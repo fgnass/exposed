@@ -1,0 +1,19 @@
+{
+  "name": "exposed",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Felix Gnass",
+  "license": "MIT",
+  "dependencies": {
+    "mime": "~1.2.11"
+  },
+  "devDependencies": {
+    "supertest": "~0.8.1",
+    "mocha": "~1.14.0",
+    "express": "~3.4.4"
+  }
+}
