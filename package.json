@@ -1,7 +1,7 @@
 {
   "name": "exposed",
   "version": "0.0.1",
-  "description": "",
+  "description": "Middleware to serve strings and buffers",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
