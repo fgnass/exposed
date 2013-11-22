@@ -1,5 +1,7 @@
 #exposed
 
+[![Build Status](https://travis-ci.org/fgnass/exposed.png)](https://travis-ci.org/fgnass/exposed)
+
 Connect-style middleware to serve buffers, strings or files.
 
 Unlike `connect.static` it only serves files that have been explicitly exposed.
