@@ -1,19 +1,21 @@
 {
   "name": "exposed",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "Middleware to serve strings and buffers",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "mocha"
   },
   "author": "Felix Gnass",
   "license": "MIT",
   "dependencies": {
-    "mime": "~1.2.11"
+    "mime": "~1.2.11",
+    "readable-stream": "~1.1.9"
   },
   "devDependencies": {
     "supertest": "~0.8.1",
     "mocha": "~1.14.0",
-    "express": "~3.4.4"
+    "express": "~3.4.4",
+    "should": "~2.1.0"
   }
 }

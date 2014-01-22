@@ -1,20 +1,20 @@
 var exposed = require('..')
   , express = require('express')
   , request = require('supertest')
-  , assert = require('assert')
+  , should = require('should')
 
 
-var expose = exposed()
-expose({ path: '/foo.txt', content: 'Foo' })
-expose({ path: '/hello.txt', root: __dirname })
-expose({ file: __dirname + '/foo.css', root: __dirname })
+var resources = exposed()
+resources.expose({ path: '/foo.txt', content: 'Foo' })
+resources.expose({ path: '/hello.txt', root: __dirname })
+resources.expose({ file: __dirname + '/foo.css', root: __dirname })
 
 
 var zeros = new Array(1024).join(0)
-expose({ path: '/zip', content: zeros, gzip: true })
+resources.expose({ path: '/zip', content: zeros, gzip: true })
 
 var app = express()
-app.use('/mounted', expose)
+app.use('/mounted', resources)
 
 describe('expose string', function() {
   it('should expose strings', function(done) {
@@ -24,12 +24,32 @@ describe('expose string', function() {
       .end(done)
   })
 
+  it('should report modifications', function() {
+    resources.expose({ path: '/foo', content: 'foo' }).dirty.should.be.ok
+    resources.expose({ path: '/foo', content: 'foo' }).dirty.should.not.be.ok
+    resources.expose({ path: '/foo', content: 'bar' }).dirty.should.be.ok
+  })
+
   it('should expose files', function(done) {
     request(app)
       .get('/mounted/hello.txt')
       .expect('content-type', 'text/plain')
       .expect(200, 'hello')
       .end(done)
+  })
+
+  it('should lookup resources', function() {
+    String(resources.get('/hello.txt')).should.equal('hello')
+  })
+
+  it('should iterate over all resources', function() {
+    var all = []
+    resources.each(function(res) {
+      all.push(res)
+    })
+    all.length.should.equal(5)
+    all[0].path.should.equal('/foo.txt')
+    all[0].toString().should.equal('Foo')
   })
 
   it('should determine path based on root', function(done) {
@@ -49,4 +69,5 @@ describe('expose string', function() {
       .expect('content-length', '29')
       .end(done)
   })
+
 })

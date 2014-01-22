@@ -12,20 +12,28 @@ Files are streamed from disk while buffers and strings are kept in memory.
     var exposed = require('exposed')
     var express = require('express')
 
-    var expose = exposed()
-    app.use(expose)
+    var resources = exposed()
+    app.use(resources)
 
     // expose a string
-    expose({ path: '/hello.txt', content: 'hello world' })
+    resources.expose({ path: '/hello.txt', content: 'hello world' })
 
     // expose a file
-    expose({ path: '/home/flx/foo/bar.txt', path: '/bar.txt' })
+    resources.expose({ path: '/home/flx/foo/bar.txt', path: '/bar.txt' })
 
     // expose a file, strip `root` to determine the path
-    expose({ file: '/home/flx/foo/bar.txt', root: '/home/flx' })
+    resources.expose({ file: '/home/flx/foo/bar.txt', root: '/home/flx' })
 
     // expose a file, resolve path relative to `root`
-    expose({ path: '/bar.txt', root: '/home/flx' })
+    resources.expose({ path: '/bar.txt', root: '/home/flx' })
+
+    // lookup an exposed resource and pipe it into a stream
+    resources.get('/foo').pipe(out)
+
+    // iterate of all exposed resources
+    resources.each(function(res) {
+      console.log(res.path, res.toString())
+    })
 
 
 ### The MIT License (MIT)
