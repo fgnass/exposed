@@ -33,9 +33,9 @@
 
   /* Environments */
 
-  "browser"       : false,   // Allows the use of undefined globals exposed by modern browsers, i.e. window or document
+  "browser"       : false,  // Allows the use of undefined globals exposed by modern browsers, i.e. window or document
   "devel"         : false,  // Allows the use of globals like console.xxx and alert statements
   "jquery"        : false,  // Allows the use of globals exposed by jQuery
-  "node"          : true,   // Allows the use of globals for code running in nodejs, i.e. 'global'
+  "node"          : true    // Allows the use of globals for code running in nodejs, i.e. 'global'
 
 }
