@@ -10,12 +10,16 @@
   "license": "MIT",
   "dependencies": {
     "mime": "~1.2.11",
-    "readable-stream": "~1.1.9"
+    "readable-stream": "~1.1.9",
+    "through": "~2.3.4",
+    "concat-stream": "~1.4.1",
+    "stream-equal": "~0.1.5"
   },
   "devDependencies": {
     "supertest": "~0.8.1",
     "mocha": "~1.14.0",
     "express": "~3.4.4",
-    "should": "~2.1.0"
+    "should": "~2.1.0",
+    "concat-stream": "~1.4.1"
   }
 }
