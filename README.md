@@ -9,36 +9,54 @@ Files are streamed from disk while buffers and strings are kept in memory.
 
 ## Usage
 
-    var exposed = require('exposed')
-    var express = require('express')
+```js
+var exposed = require('exposed')
+var express = require('express')
 
-    var resources = exposed()
-    app.use(resources)
+var resources = exposed()
+app.use(resources)
 
-    // expose a string
-    resources.expose({ path: '/hello.txt', content: 'hello world' })
+// expose a string
+resources.expose({ path: '/hello.txt', content: 'hello world' })
 
-    // expose a file
-    resources.expose({ path: '/home/flx/foo/bar.txt', path: '/bar.txt' })
+// expose a file
+resources.expose({ path: '/home/flx/foo/bar.txt', path: '/bar.txt' })
 
-    // expose a file, strip `root` to determine the path
-    resources.expose({ file: '/home/flx/foo/bar.txt', root: '/home/flx' })
+// expose a file, strip `root` to determine the path
+resources.expose({ file: '/home/flx/foo/bar.txt', root: '/home/flx' })
 
-    // expose a file, resolve path relative to `root`
-    resources.expose({ path: '/bar.txt', root: '/home/flx' })
+// expose a file, resolve path relative to `root`
+resources.expose({ path: '/bar.txt', root: '/home/flx' })
 
-    // lookup an exposed resource and pipe it into a stream
-    resources.get('/foo').pipe(out)
+// expose data from a readable stream
+resources.expose({ path: '/stream', from: fs.createReadStream('bar.txt') })
 
-    // iterate of all exposed resources
-    resources.each(function(res) {
-      console.log(res.path, res.toString())
-    })
 
+// lookup an exposed resource and pipe it into a stream
+resources.get('/foo').pipe(out)
+
+// iterate of all exposed resources
+resources.each(function(res) {
+  console.log(res.path, res.toString())
+})
+```
+
+## Events
+
+You can listen for `change` events to get notified when the content of a
+resource differs from a previously exposed resource under the same URL.
+
+```js
+resources.on('change', function(res) {
+  console.log('Resource at %s has changed', res.url)
+})
+resources.expose({ path: '/foo', content: 'foo' })
+resources.expose({ path: '/foo', content: 'bar' })
+```
 
 ### The MIT License (MIT)
 
-Copyright (c) 2013 Felix Gnass
+Copyright (c) 2014 Felix Gnass
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
