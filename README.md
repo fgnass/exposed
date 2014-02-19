@@ -54,6 +54,18 @@ resources.expose({ path: '/foo', content: 'foo' })
 resources.expose({ path: '/foo', content: 'bar' })
 ```
 
+## Pending Resources
+
+By passing `pending:true` you can expose resources that aren't ready
+yet. In the following example requests to `/foo.txt` will stay open until `res.update()` is called.
+
+```js
+var res = resources.expose({ path: '/foo.txt', pending: true })
+setTimeout(function() {
+  res.update('hello world')
+}, 5000)
+```
+
 ### The MIT License (MIT)
 
 Copyright (c) 2014 Felix Gnass

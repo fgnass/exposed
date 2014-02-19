@@ -13,6 +13,7 @@ app.use('/mounted', resources)
 resources.expose({ path: '/foo.txt', content: 'Foo' })
 resources.expose({ path: '/hello.txt', root: __dirname })
 resources.expose({ file: __dirname + '/foo.css', root: __dirname })
+resources.expose({ path: '/pending', pending: true })
 
 var zeros = new Array(1024).join(0)
 resources.expose({ path: '/zip', content: zeros, gzip: true })
@@ -24,7 +25,6 @@ describe('expose string', function() {
     resources.each(function(res) {
       all.push(res)
     })
-    all.length.should.equal(4)
     all[0].path.should.equal('/foo.txt')
     all[1].path.should.equal('/hello.txt')
   })
@@ -53,6 +53,17 @@ describe('expose string', function() {
     })
     resources.expose({ path: '/foo', content: 'foo' })
     resources.expose({ path: '/foo', content: 'bar' })
+  })
+
+  it('should update resources', function(done) {
+    request(app)
+      .get('/mounted/pending')
+      .expect(200, 'hello')
+      .end(done)
+
+    setTimeout(function() {
+      resources.get('/pending').update('hello')
+    }, 500)
   })
 
   it('should expose files', function(done) {
