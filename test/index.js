@@ -13,6 +13,7 @@ app.use('/mounted', resources)
 resources.expose({ path: '/foo.txt', content: 'Foo' })
 resources.expose({ path: '/hello.txt', root: __dirname })
 resources.expose({ file: __dirname + '/foo.css', root: __dirname })
+resources.expose({ file: __dirname + '/bar.txt', root: __dirname, content: 'boo' })
 resources.expose({ path: '/pending', pending: true })
 
 var zeros = new Array(1024).join(0)
@@ -71,6 +72,14 @@ describe('expose string', function() {
       .get('/mounted/hello.txt')
       .expect('content-type', 'text/plain')
       .expect(200, 'hello')
+      .end(done)
+  })
+
+  it('should expose files with different content', function(done) {
+    request(app)
+      .get('/mounted/bar.txt')
+      .expect('content-type', 'text/plain')
+      .expect(200, 'boo')
       .end(done)
   })
 
