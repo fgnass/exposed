@@ -1,6 +1,6 @@
 {
   "name": "exposed",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Middleware to serve strings and buffers",
   "main": "lib/index.js",
   "scripts": {
