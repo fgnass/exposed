@@ -78,7 +78,7 @@ describe('expose string', function() {
   it('should expose files with different content', function(done) {
     request(app)
       .get('/mounted/bar.txt')
-      .expect('content-type', 'text/plain')
+      .expect('content-type', 'text/plain;charset=utf8')
       .expect(200, 'boo')
       .end(done)
   })
